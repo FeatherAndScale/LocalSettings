@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Scale.Tests
 {
@@ -8,17 +9,24 @@ namespace Scale.Tests
     public class LocalSettingsTests
     {
         [TestMethod]
-        public void LoadSettings_ReloadingSettingThatDidNotExistInOriginalConfig_AppSettingIsReset()
+        public void GetSettings()
         {
-            var settings1 = new NameValueCollection();
-            settings1.Add("test1", "value1");
+            var settings = LocalSettings.Settings;
+            foreach (string setting in settings)
+            {
+                Trace.WriteLine(setting + " = " + settings[setting]);
+            }
+        }
 
-            LocalSettings.LoadSettings(settings1);
-
-            var settings2 = new NameValueCollection();
-            settings2.Add("test1", "value2");
-
-            Assert.AreEqual("value2", System.Configuration.ConfigurationManager.AppSettings["test1"]);
+        [TestMethod]
+        public void Refresh()
+        {
+            LocalSettings.Refresh();
+            var settings = LocalSettings.Settings;
+            foreach (string setting in settings)
+            {
+                Trace.WriteLine(setting + " = " + settings[setting]);
+            }
         }
     }
 }

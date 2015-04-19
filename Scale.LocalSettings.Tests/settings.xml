@@ -1,3 +1,4 @@
 <appSettings>
 	<add key="TestSetting" value="TestValue" />
+  <add key="AppSettingTest" value="AppSettingTestValue" />
 </appSettings>
