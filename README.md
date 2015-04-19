@@ -1,11 +1,15 @@
 # LocalSettings
-Gets missing AppSettings values from an optional Settings File or Environment Variables. This is to work around the problem of storing secrets in Web.config
-and app.config.
+Loads AppSettings values from an optional Settings File and/or from Environment Variables. Works around the problem of storing secrets in Web.config
+and App.config for .NET OSS projects.
 
+## Installation
+`nuget install Scale.LocalSettings`
 
 ## Usage
-`LocalSettings.Settings` returns a copy of the AppSettings for the application, augmented with values from a settings file or environment variable. 
-**Note**: It will not mutate (change or add to) the AppSettings for the application.
+`LocalSettings.Settings` returns a copy of the `AppSettings` for the application, augmented with values from a settings file or environment variable.
+LocalSettings will only return values for keys that exist in the AppSettings config section. Values are returned in the following order of precedence:
+1. AppSettings config section. 2. Settings file specified by the Scale.LocalSettings.File appSetting. 3. Environment Variable.
+**Note**: _LocalSettings will not mutate (change or add to) the applciation's AppSettings._
 
 ```csharp
     // Get AppSettings and replace missing values with values from an optional Settings File or Environment Variables (in that order of precedence).
@@ -36,7 +40,7 @@ And you have a _settings.xml_ file in your Project that contains:
     </appSettings>
 ```
 
-And you have an Environment Variable named "AZURE_STORAGE_CONNECTION_STRING" which is set to "abcdef123456".
+And you have an Environment Variable named _"AZURE_STORAGE_CONNECTION_STRING"_ which is set to _"abcdef123456"_.
 
 Then the contents of the `NameValueCollection` returned by `LocalSettings.Settings` will be:
 
@@ -46,3 +50,6 @@ Then the contents of the `NameValueCollection` returned by `LocalSettings.Settin
 	AZURE_STORAGE_CONNECTION_STRING = abcdef123456
 	NoSettingTest =
 ```
+
+## Help
+Create an Issue or contact @DanielLarsenNZ if you have any queries. Contributions welcomed.
