@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Scale.LocalSettings</id>
+    <version>0.1.0</version>
+    <title>LocalSettings</title>
+    <authors>Daniel Larsen</authors>
+    <owners>Feather &amp; Scale</owners>
+    <licenseUrl>https://github.com/FeatherAndScale/LocalSettings/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/FeatherAndScale/LocalSettings</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Loads AppSettings from a settings file and/or Environment Variables.</description>
+    <releaseNotes>First cut. Supports settings file and Environment Variables.</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>.net appSettings web.config</tags>
+  </metadata>
+</package>

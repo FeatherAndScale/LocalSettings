@@ -62,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="LocalSettings.spec" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="settings.xml" />
