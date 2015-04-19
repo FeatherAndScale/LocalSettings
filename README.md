@@ -13,11 +13,12 @@ LocalSettings will only return values for keys that exist in the `AppSettings` c
 2. Settings file specified by the _Scale.LocalSettings.File_ appSetting. 
 3. Environment Variable.
 
-**Note**: _LocalSettings will not mutate (change or add to) the applciation's AppSettings._
+**Note**: _LocalSettings will not mutate (change or add to) the application's AppSettings._
 
 ### Settings XML file
-The path and filename of a Settings file should be set in an AppSetting named _"Scale.LocalSettings.File"_. It can be any name in any location that is 
-available to the app. The format of the file should be the same as the `<appSettings>` XML configuration section, e.g.
+The path and filename of a Settings file should be specified in the Application's Web.config or App.config file, in an AppSetting named 
+_"Scale.LocalSettings.File"_. It can be any name in any location that is available to the app. The format of the file should be the same 
+as the `<appSettings>` XML configuration section, e.g.
 
 ```xml
 	<?xml version="1.0" encoding="utf-8" ?>
@@ -29,8 +30,8 @@ available to the app. The format of the file should be the same as the `<appSett
 
 
 ### Environment Variables
-Any process, user or machine Environment Variable can be used as a setting. You can set a user Environment Variable with the following PowerShell command. 
-You must restart any process that needs to access the variable before using.
+Any Process, User or Machine Environment Variable can be used as a setting. You can set a User Environment Variable with the following PowerShell command. 
+You must restart any process that needs to access the variable before use.
 
 ```PowerShell
     [Environment]::SetEnvironmentVariable("YourEnvVarName", "YourEnvVarSetting", "User")
@@ -38,8 +39,13 @@ You must restart any process that needs to access the variable before using.
 
 
 ### Usage
+`Settings` is a Property of the static `LocalSettings` class. It is populated with settings immediately before the Property is accessed. You can refresh the
+settings at anytime by calling the `Refresh` method. This will reload settings from the settings file and Environment Vars, but does not currently refresh
+keys and values from the Application's web.config or app.config file.
 
 ```csharp
+	using Scale;
+
     // Get AppSettings and replace missing values with values from an optional Settings File or Environment Variables (in that order of precedence).
 	var settings = LocalSettings.Settings;
 
