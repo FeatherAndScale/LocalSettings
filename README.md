@@ -5,11 +5,39 @@ and App.config for .NET OSS projects.
 ## Installation
 `nuget install Scale.LocalSettings`
 
-## Usage
+## About
 `LocalSettings.Settings` returns a copy of the `AppSettings` for the application, augmented with values from a settings file or environment variable.
-LocalSettings will only return values for keys that exist in the AppSettings config section. Values are returned in the following order of precedence:
-1. AppSettings config section. 2. Settings file specified by the Scale.LocalSettings.File appSetting. 3. Environment Variable.
+LocalSettings will only return values for keys that exist in the `AppSettings` config section. Values are returned in the following order of precedence:
+
+1. `AppSettings` config section. 
+2. Settings file specified by the _Scale.LocalSettings.File_ appSetting. 
+3. Environment Variable.
+
 **Note**: _LocalSettings will not mutate (change or add to) the applciation's AppSettings._
+
+### Settings XML file
+The path and filename of a Settings file should be set in an AppSetting named _"Scale.LocalSettings.File"_. It can be any name in any location that is 
+available to the app. The format of the file should be the same as the `<appSettings>` XML configuration section, e.g.
+
+```xml
+	<?xml version="1.0" encoding="utf-8" ?>
+    <appSettings>
+	  <add key="YourSettingName" value="YourSettingValue" />
+	  <!-- ... -->
+    </appSettings>
+```
+
+
+### Environment Variables
+Any process, user or machine Environment Variable can be used as a setting. You can set a user Environment Variable with the following PowerShell command. 
+You must restart any process that needs to access the variable before using.
+
+```PowerShell
+    [Environment]::SetEnvironmentVariable("YourEnvVarName", "YourEnvVarSetting", "User")
+```
+
+
+### Usage
 
 ```csharp
     // Get AppSettings and replace missing values with values from an optional Settings File or Environment Variables (in that order of precedence).
@@ -18,6 +46,7 @@ LocalSettings will only return values for keys that exist in the AppSettings con
 	// Refresh the settings from the file and environment variables at any time.
 	LocalSettings.Refresh();
 ```
+
 
 ### Example
 Given that your _Web.config_ or _App.config_ file contains:
@@ -50,6 +79,7 @@ Then the contents of the `NameValueCollection` returned by `LocalSettings.Settin
 	AZURE_STORAGE_CONNECTION_STRING = abcdef123456
 	NoSettingTest =
 ```
+
 
 ## Help
 Create an Issue or contact @DanielLarsenNZ if you have any queries. Contributions welcomed.
