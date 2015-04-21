@@ -2,6 +2,14 @@
 Loads AppSettings values from an optional Settings File and/or from Environment Variables. Works around the problem of storing secrets in Web.config
 and App.config for .NET OSS projects.
 
+## TL;DR
+1. `nuget install Scale.LocalSettings`
+1. Add your secret appSetting to *app.config* or *web.config*, but leave the value empty.
+1. Add to appSettings: `<add key="Scale.LocalSettings.File" value="..\..\settings.xml" />`
+1. Copy your secret appSettings with values to a new *settings.xml* in the root folder of your project.
+1. `var appSettings = LocalSettings.Settings;`
+
+
 ## Installation
 `nuget install Scale.LocalSettings`
 
@@ -10,15 +18,17 @@ and App.config for .NET OSS projects.
 LocalSettings will only return values for keys that exist in the `AppSettings` config section. Values are returned in the following order of precedence:
 
 1. `AppSettings` config section. 
-2. Settings file specified by the _Scale.LocalSettings.File_ appSetting. 
+2. Settings file specified by the *Scale.LocalSettings.File* appSetting. 
 3. Environment Variable.
 
 **Note**: _LocalSettings will not mutate (change or add to) the application's AppSettings._
 
 ### Settings XML file
 The path and filename of a Settings file should be specified in the Application's Web.config or App.config file, in an AppSetting named 
-_"Scale.LocalSettings.File"_. It can be any name in any location that is available to the app. The format of the file should be the same 
-as the `<appSettings>` XML configuration section, e.g.
+*Scale.LocalSettings.File*. It can be any name and in any location that is available to the app. Paths are relative to 
+`AppDomain.CurrentDomain.BaseDirectory`. In a Web Application this is the Web root folder. In a Unit Test or Console Application, this is *bin\Debug*.
+
+The format of the file should be the same as the `<appSettings>` XML configuration section, e.g.
 
 ```xml
 	<?xml version="1.0" encoding="utf-8" ?>
@@ -55,7 +65,7 @@ keys and values from the Application's web.config or app.config file.
 
 
 ### Example
-Given that your _Web.config_ or _App.config_ file contains:
+Given that your *Web.config* or *App.config* file contains:
 
 ```xml
     <appSettings>
@@ -66,7 +76,7 @@ Given that your _Web.config_ or _App.config_ file contains:
     </appSettings>
 ```
 
-And you have a _settings.xml_ file in your Project that contains:
+And you have a *settings.xml* file in your Project that contains:
 
 ```xml
     <appSettings>
@@ -75,7 +85,7 @@ And you have a _settings.xml_ file in your Project that contains:
     </appSettings>
 ```
 
-And you have an Environment Variable named _"AZURE_STORAGE_CONNECTION_STRING"_ which is set to _"abcdef123456"_.
+And you have an Environment Variable named *AZURE_STORAGE_CONNECTION_STRING* which is set to *abcdef123456*.
 
 Then the contents of the `NameValueCollection` returned by `LocalSettings.Settings` will be:
 

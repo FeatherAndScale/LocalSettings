@@ -5,6 +5,7 @@ using System.Xml;
 using System.Linq;
 using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace Scale
 {
@@ -76,7 +77,7 @@ namespace Scale
             string file = GetFileSetting();
             if (string.IsNullOrEmpty(file)) return new NameValueCollection();
 
-            var reader = XmlReader.Create(file);
+            var reader = XmlReader.Create(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file));
 
             var settings = new NameValueCollection();
             while (!reader.EOF)
