@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Scale.LocalSettings</id>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <title>LocalSettings</title>
     <authors>Daniel Larsen</authors>
     <owners>Feather &amp; Scale</owners>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/FeatherAndScale/LocalSettings</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Loads AppSettings from a settings file and/or Environment Variables.</description>
-    <releaseNotes>First cut. Supports settings file and Environment Variables.</releaseNotes>
+    <releaseNotes>Fixing relative paths to Settings file in Web apps. Paths are relative to AppDomain.CurrentDomain.BaseDirectory.</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>.net appSettings web.config</tags>
   </metadata>
