@@ -7,11 +7,12 @@ and App.config for .NET OSS projects.
 1. Add your secret appSetting to **web.config**, but leave the value empty.
 1. Add to appSettings: `<add key="Scale.LocalSettings.File" value="settings.xml" />`
 1. Create **settings.xml** in web root. Copy your secret appSettings with values into that file.
-1. `var appSettings = LocalSettings.Settings;`
+1. `var settings = LocalSettings.Settings;`
 
 
 ## Installation
 `nuget install Scale.LocalSettings`
+
 
 ## About
 `LocalSettings.Settings` returns a copy of the `AppSettings` for the application, augmented with values from a settings file or environment variable.
@@ -22,6 +23,7 @@ LocalSettings will only return values for keys that exist in the `AppSettings` c
 3. Environment Variable.
 
 **Note**: _LocalSettings will not mutate (change or add to) the application's AppSettings._
+
 
 ### Settings XML file
 The path and filename of a Settings file should be specified in the Application's Web.config or App.config file, in an AppSetting named 
@@ -96,6 +98,25 @@ Then the contents of the `NameValueCollection` returned by `LocalSettings.Settin
 	NoSettingTest =
 ```
 
+You can now inject settings into classes that support having settings injected into them, rather than reading directly from 
+`System.Configuration.ConfigurationManager.AppSettings`, e.g.
+
+```csharp
+	using Scale;
+	using Scale.Storage.Blob;
+
+	// ...
+
+	var storage = new AzureBlobStorage(LocalSettings.Settings);
+	return await storage.List("photos", true);
+```
+
+If you .gitignore your Settings File and don't include it in your .csproj or .sln file, then this file will remain local and will not be deployed. 
+In Azure you can use App Configuration Settings to override the web.config appSettings. In other environments you can use [Config Transforms].
+
 
 ## Help
 Create an Issue or contact @DanielLarsenNZ if you have any queries. Contributions welcomed.
+
+
+[Config Transforms]: http://www.codeproject.com/Tips/559849/Transform-Web-Config-when-Deploying-a-Web-Applicat
