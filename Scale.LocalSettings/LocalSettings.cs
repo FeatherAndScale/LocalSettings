@@ -18,7 +18,15 @@ namespace Scale
 
         static LocalSettings()
         {
-            Refresh();
+            try
+            { 
+                Refresh();
+            }
+            catch (Exception exception)
+            {
+                Trace.TraceError(exception.Message);
+                throw;
+            }
         }
 
         public static void Refresh()
@@ -76,9 +84,17 @@ namespace Scale
         {
             string file = GetFileSetting();
             if (string.IsNullOrEmpty(file)) return new NameValueCollection();
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file);
+            
+            if (!File.Exists(filePath))
+            {
+                // file not found, return empty collection.
+                Trace.TraceInformation("AppSettings[{0}] specifies \"{1}\" as the settings file, but it was not found at \"{2}\".", 
+                    FileAppSettingKey, file, filePath);
+                return new NameValueCollection();
+            }
 
-            var reader = XmlReader.Create(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, file));
-
+            var reader = XmlReader.Create(filePath);
             var settings = new NameValueCollection();
             while (!reader.EOF)
             {
