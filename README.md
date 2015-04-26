@@ -22,6 +22,8 @@ LocalSettings will only return values for keys that exist in the `AppSettings` c
 2. Settings file specified by the *Scale.LocalSettings.File* appSetting. 
 3. Environment Variable.
 
+Azure Web App Settings override web.config appSettings.
+
 **Note**: _LocalSettings will not mutate (change or add to) the application's AppSettings._
 
 
@@ -51,7 +53,7 @@ You must restart any process that needs to access the variable before use.
 
 
 ### Usage
-`Settings` is a Property of the static `LocalSettings` class. It is populated with settings immediately before the Property is accessed. You can refresh the
+`Settings` is a Property of the static `LocalSettings` class. It is populated with settings before the Property is accessed. You can refresh the
 settings at anytime by calling the `Refresh` method. This will reload settings from the settings file and Environment Vars, but does not currently refresh
 keys and values from the Application's web.config or app.config file.
 

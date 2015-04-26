@@ -94,15 +94,18 @@ namespace Scale
                 return new NameValueCollection();
             }
 
-            var reader = XmlReader.Create(filePath);
-            var settings = new NameValueCollection();
-            while (!reader.EOF)
+            using (var reader = XmlReader.Create(filePath))
             {
-                if (!reader.Read()) break;
-                if (reader.Name == "add") settings.Add(reader.GetAttribute("key"), reader.GetAttribute("value"));
-            }
+                var settings = new NameValueCollection();
+                while (!reader.EOF)
+                {
+                    if (!reader.Read()) break;
+                    if (reader.Name == "add") settings.Add(reader.GetAttribute("key"), reader.GetAttribute("value"));
+                }
 
-            return settings;
+                reader.Close();
+                return settings;
+            }
         }
 
         //public static void LoadSettings()
