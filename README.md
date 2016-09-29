@@ -3,7 +3,7 @@ Loads AppSettings values from an optional Settings File and/or from Environment 
 and App.config for .NET OSS projects.
 
 ## TL;DR
-1. `nuget install Scale.LocalSettings`
+1. `PM> Install-Package Scale.LocalSettings`
 1. Add your secret appSetting to **web.config**, but leave the value empty.
 1. Add to appSettings: `<add key="Scale.LocalSettings.File" value="settings.xml" />`
 1. Create **settings.xml** in web root. Copy your secret appSettings with values into that file.
